@@ -1,8 +1,6 @@
 
-import { RouterAction, LocationChangeAction } from 'react-router-redux';
-
-type ReactRouterAction = RouterAction | LocationChangeAction;
+import { RouterAction } from 'connected-react-router';
 
 // combine action types here 
-// export type RootAction = ReactRouterAction | GameAction...
-export type RootAction = ReactRouterAction;
+// export type RootAction = RouterAction | GameAction...
+export type RootAction = RouterAction;

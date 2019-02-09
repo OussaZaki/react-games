@@ -39,7 +39,11 @@ class Concentration extends React.Component<{}, State> {
   render() {
     const { loading, cards } = this.state;
     return (
-      <div className="App">
+      <div className="Concentration">
+        <div className="game-title">
+          <h2>Concentration</h2>
+          <h4>Memory game with matching cards.</h4>
+        </div>
         {loading ? (
           <div>Loading...</div>
         ) : (
