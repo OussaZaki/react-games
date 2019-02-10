@@ -1,4 +1,7 @@
-export type Card = {
-  id: number;
-  content: string;
+export interface Card {
+  id: string;
+  svg: string;
+  flipped: boolean;
+  found: boolean;
+  isDuplicate?: boolean;
 };
