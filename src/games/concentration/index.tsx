@@ -15,20 +15,7 @@ class Concentration extends React.Component<{}, State> {
 
   componentDidMount() {
     // TODO: implement getCards from service.
-    const cards: Card[] = [
-        {
-            id: 1,
-            content: "apple"
-        },
-        {
-            id: 2,
-            content: "orange"
-        },
-        {
-            id: 3,
-            content: "pineapple"
-        },
-    ];
+    const cards: Card[] = [];
     this.setState({
       cards,
       loading: false
@@ -51,7 +38,7 @@ class Concentration extends React.Component<{}, State> {
             <FlipCard
               onClick={() => console.log("click")}
               key={card.id}
-              content={card.content}
+              content={card.svg}
             />
           ))
         )}
