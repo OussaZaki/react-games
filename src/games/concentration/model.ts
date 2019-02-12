@@ -5,3 +5,9 @@ export interface Card {
   found: boolean;
   isDuplicate?: boolean;
 };
+
+export enum GameDifficulty {
+  beginner = 1,
+  mediun,
+  advanced
+}
