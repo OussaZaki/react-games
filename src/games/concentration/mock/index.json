@@ -1,20 +1,20 @@
 {
   "cards": [
     {
-      "id": 9870,
-      "svg": "some_icon"
+      "id": 0,
+      "svg": "https://image.flaticon.com/icons/svg/1413/1413648.svg"
     },
     {
-      "id": 9871,
-      "svg": "some_icon"
+      "id": 1,
+      "svg": "https://image.flaticon.com/icons/svg/1413/1413626.svg"
     },
     {
-      "id": 9872,
-      "svg": "some_icon"
+      "id": 2,
+      "svg": "https://image.flaticon.com/icons/svg/1413/1413628.svg"
     },
     {
-      "id": 9879,
-      "svg": "some_icon"
+      "id": 3,
+      "svg": "https://image.flaticon.com/icons/svg/1413/1413633.svg"
     }
   ]
 }
