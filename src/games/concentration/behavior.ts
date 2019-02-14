@@ -1,45 +1,42 @@
-import { getCards } from "./helper";
+import { getCards, setFlippedCard } from "./helper";
+import { map, find } from "lodash";
 import { GameDifficulty, Card } from "./model";
-import dayjs from "dayjs";
 
-const loadGamefromCache = () => {
+export const loadGamefromCache = state => () => {
   throw "Not Implemented";
 };
 
-const newGame = async () => {
-  // TODO: get game diffuclty or pass it as an argument.
-  const gameDifficulty = GameDifficulty.beginner;
-  const cards = await getCards(gameDifficulty);
-  return {
-    cards,
-    loading: false
-  };
-};
-
-const incrementTimer = state => {
+export const initGame = state => () => {
   return {
     ...state,
-    timer: state.timer + 1
+    loading: true
   };
 };
 
-const incrementTimerRef = state => {
-  return setInterval(() => incrementTimer, 1000);
-};
+export const startNewGame = state => async () => ({
+  ...state,
+  cards: await getCards(state.gameDifficulty),
+  loading: false
+});
 
-const startGame = state => {
-  const intervalRef = setInterval(state => incrementTimerRef(state), 1000);
+export const firstClick = state => () => ({
+  ...state,
+  started: true,
+  startingTime: Date.now()
+});
 
+export const flipCard = state => (card: Card) => {
+  const cardInDeck = find(state.cards, _card => _card.id === card.id);
+  if (!cardInDeck)
+    throw "Card not found";
+  
   return {
     ...state,
-    started: true,
-    intervalRef
-  };
+    cards: setFlippedCard(state.cards, card.id)
+  }
 };
 
-const flipCard = (card: Card) => {
-  if (card.found || card.flipped) return;
-
-  
-  
+export const onCardClick = state => (card: Card) => {
+  if (card.found || card.flipped) return state;
+  else throw "Not Implemented";
 };
