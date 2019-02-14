@@ -1,21 +1,26 @@
 import { find, each, flatMap, shuffle, filter, includes} from "lodash";
 import { fetchCards } from "../service";
-import { Card } from "../model";
+import { Card, GameDifficulty } from "../model";
 
 export const getCards = async (level: number) => {
   const cards = await fetchCards();
-  const cards_2 = levelCards(cards, level);
-  const cards_4 = duplicateCards(cards_2);
-  return generateDeck(cards_4);
+  const sliced = levelCards(cards, level);
+  const duplicated = duplicateCards(sliced);
+
+  return shuffleDeck(duplicated);
 };
 
-export const levelCards = (cards: Card[], level: number) => {
+// TODO: implement pagination on server side.
+export const levelCards = (cards: Card[], level: GameDifficulty) => {
   switch (level) {
-    case 0:
+    case GameDifficulty.beginner:
       return cards.slice(0, 6);
 
-    case 1:
+    case GameDifficulty.mediun:
       return cards.slice(0, 10);
+
+    case GameDifficulty.advanced:
+      return cards.slice(0, 14);
 
     default:
       return cards;
@@ -23,9 +28,9 @@ export const levelCards = (cards: Card[], level: number) => {
 };
 
 export const duplicateCards = (cards: Card[]) =>
-  flatMap(cards, card => [card, { ...card, id: `${card.id}_1`, isDuplicate: true }]);
+  flatMap(cards, card => [card, { ...card, id: `${card.id}_1`}]);
 
-export const generateDeck = (cards: Card[]) => shuffle(cards);
+export const shuffleDeck = (cards: Card[]) => shuffle(cards);
 
 export const flippedCard = (cards: Card[]) =>
   find(cards, card => !card.found && card.flipped);
@@ -38,7 +43,15 @@ export const setFoundsCards = (cards: Card[], cardsIds: string[]) =>
     if (includes(cardsIds, card.id)) card.found = true;
   });
 
+export const setFlippedCard = (cards: Card[], cardId: string) =>
+  each(cards, card => {
+    if (card.id === cardId) card.flipped = true;
+  });
+
 export const allFoundCards = (cards: Card[]) => {
-  let foundCards = filter(cards, card => card.found);
-  if (foundCards.length == cards.length) return true;
+  each(cards, card => {
+    if (!card.found) return false;
+  });
+  
+  return true;
 };
