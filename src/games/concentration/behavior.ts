@@ -1,5 +1,5 @@
-import { getCards, setFlippedCard } from "./helper";
-import { map, find } from "lodash";
+import { getCards, setFlippedCards, unsetFlippedCards } from "./helper";
+import { map, includes, filter } from "lodash";
 import { GameDifficulty, Card } from "./model";
 
 export const loadGamefromCache = state => () => {
@@ -25,14 +25,27 @@ export const firstClick = state => () => ({
   startingTime: Date.now()
 });
 
-export const flipCard = state => (card: Card) => {
-  const cardInDeck = find(state.cards, _card => _card.id === card.id);
-  if (!cardInDeck)
-    throw "Card not found";
+export const flipCards = state => (cards: Card[]) => {
+  const ids = map(cards, 'id');
+  const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
+  if (!cardsInDeck.length)
+    throw "No card was found";
   
   return {
     ...state,
-    cards: setFlippedCard(state.cards, card.id)
+    cards: setFlippedCards(state.cards, ids)
+  }
+};
+
+export const unflipCards = state => (cards: Card[]) => {
+  const ids = map(cards, 'id');
+  const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
+  if (!cardsInDeck.length)
+    throw "No card was found";
+  
+  return {
+    ...state,
+    cards: unsetFlippedCards(state.cards, ids)
   }
 };
 

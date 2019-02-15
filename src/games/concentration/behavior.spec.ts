@@ -3,7 +3,8 @@ import {
   initGame,
   startNewGame,
   firstClick,
-  flipCard,
+  flipCards,
+  unflipCards,
   onCardClick
 } from "./behavior";
 import * as helpers from "./helper";
@@ -113,15 +114,15 @@ describe("Concentration game behavior | ", () => {
     });
   });
 
-  describe("flipCard | ", () => {
-    it("Should mark the card as flipped", () => {
+  describe("flipCards | ", () => {
+    it("Should mark one card as flipped", () => {
       const state = {
         otherState: "a",
         cards
       };
 
       // Act
-      const newState = flipCard(state)(cards[0]);
+      const newState = flipCards(state)([cards[0]]);
 
       // Assert
       expect(newState.cards[0].flipped).toBe(true);
@@ -141,10 +142,45 @@ describe("Concentration game behavior | ", () => {
       }
 
       // Act
-      const newStateFn = () => flipCard(state)(card);
+      const newStateFn = () => flipCards(state)([card]);
 
       // Assert
-      expect(newStateFn).toThrow("Card not found");
+      expect(newStateFn).toThrow("No card was found");
+    });
+  });
+
+  describe("unflipCards | ", () => {
+    it("Should mark the card as flipped", () => {
+      const state = {
+        otherState: "a",
+        cards
+      };
+
+      // Act
+      const newState = unflipCards(state)([cards[0]]);
+
+      // Assert
+      expect(newState.cards[0].flipped).toBe(false);
+    });
+
+    it("Should throw error if the card is not found", () => {
+      const state = {
+        otherState: "a",
+        cards
+      };
+
+      const card = {
+        id: "9",
+        svg: "hello",
+        flipped: false,
+        found: false
+      }
+
+      // Act
+      const newStateFn = () => unflipCards(state)([card]);
+
+      // Assert
+      expect(newStateFn).toThrow("No card was found");
     });
   });
 

@@ -1,4 +1,4 @@
-import { find, each, flatMap, shuffle, filter, includes} from "lodash";
+import { find, each, flatMap, shuffle, filter, includes } from "lodash";
 import { fetchCards } from "../service";
 import { Card, GameDifficulty } from "../model";
 
@@ -28,7 +28,7 @@ export const levelCards = (cards: Card[], level: GameDifficulty) => {
 };
 
 export const duplicateCards = (cards: Card[]) =>
-  flatMap(cards, card => [card, { ...card, id: `${card.id}_1`}]);
+  flatMap(cards, card => [card, { ...card, id: `${card.id}_1` }]);
 
 export const shuffleDeck = (cards: Card[]) => shuffle(cards);
 
@@ -43,15 +43,20 @@ export const setFoundsCards = (cards: Card[], cardsIds: string[]) =>
     if (includes(cardsIds, card.id)) card.found = true;
   });
 
-export const setFlippedCard = (cards: Card[], cardId: string) =>
+export const setFlippedCards = (cards: Card[], cardsIds: string[]) =>
   each(cards, card => {
-    if (card.id === cardId) card.flipped = true;
+    if (includes(cardsIds, card.id)) card.flipped = true;
+  });
+
+export const unsetFlippedCards = (cards: Card[], cardsIds: string[]) =>
+  each(cards, card => {
+    if (includes(cardsIds, card.id)) card.flipped = false;
   });
 
 export const allFoundCards = (cards: Card[]) => {
   each(cards, card => {
     if (!card.found) return false;
   });
-  
+
   return true;
 };
