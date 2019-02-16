@@ -1,4 +1,4 @@
-import { find, each, flatMap, shuffle, filter, includes } from "lodash";
+import { find, each, flatMap, shuffle, includes } from "lodash";
 import { fetchCards } from "../service";
 import { Card, GameDifficulty } from "../model";
 
