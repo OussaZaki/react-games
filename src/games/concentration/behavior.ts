@@ -2,30 +2,38 @@ import { getCards, setFlippedCards, unsetFlippedCards } from "./helper";
 import { map, includes, filter } from "lodash";
 import { GameDifficulty, Card } from "./model";
 
-export const loadGamefromCache = state => () => {
+export type GameState = {
+  loading: boolean;
+  cards: Card[];
+  startingTime: Date;
+  started: boolean;
+  gameDifficulty: GameDifficulty;
+}
+
+export const loadGamefromCache = () => () => {
   throw "Not Implemented";
 };
 
-export const initGame = state => () => {
+export const initGame = (state: GameState) => () => {
   return {
     ...state,
     loading: true
   };
 };
 
-export const startNewGame = state => async () => ({
+export const startNewGame = (state: GameState) => async () => ({
   ...state,
   cards: await getCards(state.gameDifficulty),
   loading: false
 });
 
-export const firstClick = state => () => ({
+export const firstClick = (state: GameState) => () => ({
   ...state,
   started: true,
   startingTime: Date.now()
 });
 
-export const flipCards = state => (cards: Card[]) => {
+export const flipCards = (state: GameState) => (cards: Card[]) => {
   const ids = map(cards, 'id');
   const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
   if (!cardsInDeck.length)
@@ -37,7 +45,7 @@ export const flipCards = state => (cards: Card[]) => {
   }
 };
 
-export const unflipCards = state => (cards: Card[]) => {
+export const unflipCards = (state: GameState) => (cards: Card[]) => {
   const ids = map(cards, 'id');
   const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
   if (!cardsInDeck.length)
@@ -49,7 +57,7 @@ export const unflipCards = state => (cards: Card[]) => {
   }
 };
 
-export const onCardClick = state => (card: Card) => {
+export const onCardClick = (state: GameState) => (card: Card) => {
   if (card.found || card.flipped) return state;
   else throw "Not Implemented";
 };
