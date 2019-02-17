@@ -4,7 +4,7 @@ import FlipCard from "./flipCard";
 
 const onClick = jest.fn();
 
-// TODO: separate behavior from component1q
+// TODO: separate behavior from component
 xdescribe("Component FlipCard | ", () => {
   beforeAll(() => {
   });

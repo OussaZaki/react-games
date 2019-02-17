@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   loadGamefromCache,
   initGame,
@@ -117,8 +118,11 @@ describe("Concentration game behavior | ", () => {
   describe("flipCards | ", () => {
     it("Should mark one card as flipped", () => {
       const state = {
-        otherState: "a",
-        cards
+        loading: false,
+        cards,
+        startingTime: date,
+        started: true,
+        gameDifficulty: 1
       };
 
       // Act

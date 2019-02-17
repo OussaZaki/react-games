@@ -1,3 +1,5 @@
+import { StateHandler } from "recompose";
+
 export interface Card {
   id: string;
   svg: string;
@@ -10,7 +12,7 @@ export enum GameDifficulty {
   beginner = 1,
   mediun,
   advanced
-}
+};
 
 export type GameState = {
   loading: boolean;
@@ -18,4 +20,6 @@ export type GameState = {
   startingTime: number;
   started: boolean;
   gameDifficulty: GameDifficulty;
-}
+};
+
+export type StateHandlerFn = StateHandler<GameState>;
