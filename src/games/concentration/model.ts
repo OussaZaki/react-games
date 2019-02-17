@@ -11,3 +11,11 @@ export enum GameDifficulty {
   mediun,
   advanced
 }
+
+export type GameState = {
+  loading: boolean;
+  cards: Card[];
+  startingTime: number;
+  started: boolean;
+  gameDifficulty: GameDifficulty;
+}

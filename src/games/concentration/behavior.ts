@@ -1,14 +1,6 @@
 import { getCards, setFlippedCards, unsetFlippedCards } from "./helper";
 import { map, includes, filter } from "lodash";
-import { GameDifficulty, Card } from "./model";
-
-export type GameState = {
-  loading: boolean;
-  cards: Card[];
-  startingTime: Date;
-  started: boolean;
-  gameDifficulty: GameDifficulty;
-}
+import { Card, GameState } from "./model";
 
 export const loadGamefromCache = () => () => {
   throw "Not Implemented";
