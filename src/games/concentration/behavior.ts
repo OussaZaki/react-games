@@ -3,7 +3,7 @@ import { map, includes, filter } from "lodash";
 import { Card, GameState } from "./model";
 
 export const loadGamefromCache = () => () => {
-  throw "Not Implemented";
+  throw Error("Not Implemented");
 };
 
 export const initGame = (state: GameState) => () => {
@@ -29,7 +29,7 @@ export const flipCards = (state: GameState) => (cards: Card[]) => {
   const ids = map(cards, 'id');
   const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
   if (!cardsInDeck.length)
-    throw "No card was found";
+    throw Error("No card was found");
   
   return {
     ...state,
@@ -41,7 +41,7 @@ export const unflipCards = (state: GameState) => (cards: Card[]) => {
   const ids = map(cards, 'id');
   const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
   if (!cardsInDeck.length)
-    throw "No card was found";
+    throw Error("No card was found");
   
   return {
     ...state,
@@ -51,5 +51,5 @@ export const unflipCards = (state: GameState) => (cards: Card[]) => {
 
 export const onCardClick = (state: GameState) => (card: Card) => {
   if (card.found || card.flipped) return state;
-  else throw "Not Implemented";
+  else throw Error("Not Implemented");
 };
