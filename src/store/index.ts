@@ -1,10 +1,10 @@
-import { createStore } from 'redux';
-import { createBrowserHistory } from 'history'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore } from "redux";
+import { createBrowserHistory } from "history";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-import rootReducer from './root-reducer';
+import rootReducer from "./root-reducer";
 
-export const history = createBrowserHistory()
+export const history = createBrowserHistory();
 
 
 function configureStore(initialState?: {}) {

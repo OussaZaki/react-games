@@ -1,6 +1,6 @@
 
-import { RouterAction } from 'connected-react-router';
+import { RouterAction } from "connected-react-router";
 
-// combine action types here 
+// combine action types here
 // export type RootAction = RouterAction | GameAction...
 export type RootAction = RouterAction;

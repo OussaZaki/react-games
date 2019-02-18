@@ -10,9 +10,6 @@ class Home extends React.Component {
             This is a collection of classic games developped using react.
           </h3>
         </header>
-        <div>
-            
-        </div>
       </div>
     );
   }
