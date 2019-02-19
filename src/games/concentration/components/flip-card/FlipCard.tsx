@@ -33,16 +33,8 @@ class FlipCard extends React.Component<Props, State> {
   };
 
   cardStyle = () => {
-    const styles = new Set<string>(['flipcard']);
-    if (this.state.isFlipped)
-      styles.add("flipped");
-    
-    if (this.state.isFound)
-      styles.add("flipped"), styles.add("found");
-
     return `flipcard ${this.state.isFound ? "flipped found" : (this.state.isFlipped ?   "flipped" : "")}`;
   }
-    
 
   render() {
     const { handleClick, cardStyle } = this;
@@ -59,4 +51,4 @@ class FlipCard extends React.Component<Props, State> {
   }
 }
 
-export default FlipCard; 
+export default FlipCard;
