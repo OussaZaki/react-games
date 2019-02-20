@@ -1,11 +1,14 @@
 import * as React from "react";
+import { compose } from "recompose";
+
 import { GameProps } from "./model";
 import { FlipCard } from "./components";
+import { withGameStateHandlers, withLifecycle } from "./behavior";
 
 const Concentration: React.FC<GameProps> = ({
   loading,
   cards,
-  handleCardClick
+  onCardClick
 }) => (
   <div className="Concentration">
     <div className="game-title">
@@ -17,13 +20,18 @@ const Concentration: React.FC<GameProps> = ({
     ) : (
       cards.map(card => (
         <FlipCard
-          onClick={() => handleCardClick(card.id)}
+          onClick={() => onCardClick(card.id)}
           key={card.id}
           content={card.svg}
+          flipped={card.flipped}
+          found={card.found}
         />
       ))
     )}
   </div>
 );
 
-export default Concentration;
+export default compose<GameProps, {}>(
+  withGameStateHandlers,
+  withLifecycle
+)(Concentration);

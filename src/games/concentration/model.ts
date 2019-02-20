@@ -1,3 +1,5 @@
+import { StateHandler } from "recompose";
+
 export interface Card {
   id: string;
   svg: string;
@@ -20,13 +22,10 @@ export interface GameState {
   gameDifficulty: GameDifficulty;
 }
 
-export type Props = {
-  cards: Card[];
-  loading: boolean;
-};
-
 export type Handlers = {
-  handleCardClick: (card: string) => void;
+  initGame: () => StateHandler<GameState>;
+  startNewGame: (cards: Card[]) => StateHandler<GameState>;
+  onCardClick: (card: string) => StateHandler<GameState>;
 };
 
-export type GameProps = Props & Handlers;
+export type GameProps = GameState & Handlers;

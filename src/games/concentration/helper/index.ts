@@ -40,23 +40,28 @@ export const matchingCards = (card1: Card, card2: Card) =>
 
 export const setFoundsCards = (cards: Card[], cardsIds: string[]) =>
   each(cards, card => {
-    if (includes(cardsIds, card.id)) card.found = true;
+    if (includes(cardsIds, card.id)) { card.found = true; }
   });
 
 export const setFlippedCards = (cards: Card[], cardsIds: string[]) =>
   each(cards, card => {
-    if (includes(cardsIds, card.id)) card.flipped = true;
+    if (includes(cardsIds, card.id)) { card.flipped = true; }
   });
 
 export const unsetFlippedCards = (cards: Card[], cardsIds: string[]) =>
   each(cards, card => {
-    if (includes(cardsIds, card.id)) card.flipped = false;
+    if (includes(cardsIds, card.id)) { card.flipped = false; }
   });
 
 export const allFoundCards = (cards: Card[]) => {
   each(cards, card => {
-    if (!card.found) return false;
+    if (!card.found) { return false; }
   });
 
   return true;
 };
+
+export const firstCardClick = () => ({
+  started: true,
+  startingTime: Date.now()
+});
