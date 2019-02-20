@@ -3,7 +3,6 @@ import {
   loadGamefromCache,
   initGame,
   startNewGame,
-  firstClick,
   flipCards,
   unflipCards,
   onCardClick
@@ -28,8 +27,6 @@ const cards = [
 const date = Date.now();
 
 describe("Concentration game behavior | ", () => {
-  beforeAll(() => {});
-
   describe("loadGamefromCache | ", () => {
     it("Should throw Not Implemented exception", () => {
       // Arrange
@@ -46,18 +43,12 @@ describe("Concentration game behavior | ", () => {
   describe("initGame | ", () => {
     it("Should set loading to true", () => {
       // Arrange
-      const state = {
-        other: "a",
-        loading: false
-      };
-
       const expectedState = {
-        other: "a",
         loading: true
       };
 
       // Act
-      const newState = initGame(state)();
+      const newState = initGame()();
 
       // Assert
       expect(newState).toEqual(expectedState);
@@ -67,48 +58,13 @@ describe("Concentration game behavior | ", () => {
   describe("startNewGame | ", () => {
     it("Should fetch cards and set loading to false", async () => {
       // Arrange
-      jest.spyOn(helpers, "getCards").mockResolvedValue(cards);
-
-      const state = {
-        otherState: "a",
-        cards: [],
-        loading: false
-      };
-
       const expectedState = {
-        otherState: "a",
         cards,
         loading: false
       };
 
       // Act
-      const newState = startNewGame(state)();
-
-      // Assert
-      expect(newState).resolves.toEqual(expectedState);
-    });
-  });
-
-  describe("firstClick | ", () => {
-    it("Should save the time and mark the game as started", () => {
-      // Arrange
-      jest.spyOn(Date, "now").mockReturnValue(date);
-
-      const state = {
-        otherState: "a",
-        cards,
-        started: false
-      };
-
-      const expectedState = {
-        otherState: "a",
-        cards,
-        started: true,
-        startingTime: date
-      };
-
-      // Act
-      const newState = firstClick(state)();
+      const newState = startNewGame()(cards);
 
       // Assert
       expect(newState).toEqual(expectedState);
@@ -143,7 +99,7 @@ describe("Concentration game behavior | ", () => {
         svg: "hello",
         flipped: false,
         found: false
-      }
+      };
 
       // Act
       const newStateFn = () => flipCards(state)([card]);
@@ -178,7 +134,7 @@ describe("Concentration game behavior | ", () => {
         svg: "hello",
         flipped: false,
         found: false
-      }
+      };
 
       // Act
       const newStateFn = () => unflipCards(state)([card]);
@@ -189,6 +145,31 @@ describe("Concentration game behavior | ", () => {
   });
 
   describe("onCardClick | ", () => {
+    it("Should call first click if the game hasn't started yet", () => {
+      // Arrange
+      const firstCardClickMock = jest.spyOn(helpers, "firstCardClick");
+      const card: Card = {
+        id: "0",
+        svg: "apple",
+        found: false,
+        flipped: false
+      };
+
+      const state = {
+        loading: false,
+        cards,
+        startingTime: 0,
+        started: false,
+        gameDifficulty: 0
+      };
+
+      // Act
+      const newState = onCardClick(state)(card);
+
+      // Assert
+      expect(firstCardClickMock).toBeCalled();
+    });
+
     it("Should not update state if the card is flipped", () => {
       // Arrange
       const card: Card = {
@@ -196,19 +177,21 @@ describe("Concentration game behavior | ", () => {
         svg: "apple",
         found: false,
         flipped: true
-      }
+      };
 
       const state = {
-        otherState: "a",
+        loading: false,
         cards,
-        started: false
+        startingTime: 0,
+        started: true,
+        gameDifficulty: 0
       };
 
       // Act
       const newState = onCardClick(state)(card);
 
       // Assert
-      expect(newState).toEqual(state);
+      expect(newState).toBeUndefined();
     });
 
     it("Should not update state if the card is found", () => {
@@ -218,19 +201,21 @@ describe("Concentration game behavior | ", () => {
         svg: "apple",
         found: true,
         flipped: true
-      }
+      };
 
       const state = {
-        otherState: "a",
+        loading: false,
         cards,
-        started: false
+        startingTime: 0,
+        started: true,
+        gameDifficulty: 0
       };
 
       // Act
       const newState = onCardClick(state)(card);
 
       // Assert
-      expect(newState).toEqual(state);
+      expect(newState).toBeUndefined();
     });
 
     it("Should throw Not Implemented exception otherwise", () => {
@@ -240,12 +225,14 @@ describe("Concentration game behavior | ", () => {
         svg: "apple",
         found: false,
         flipped: false
-      }
+      };
 
       const state = {
-        otherState: "a",
+        loading: false,
         cards,
-        started: false
+        startingTime: 0,
+        started: true,
+        gameDifficulty: 0
       };
 
       // Act
@@ -254,5 +241,9 @@ describe("Concentration game behavior | ", () => {
       // Assert
       expect(newStateFn).toThrow("Not Implemented");
     });
+  });
+
+  describe("lifecycle | ", () => {
+    jest.spyOn(helpers, "getCards").mockResolvedValue(cards);
   });
 });

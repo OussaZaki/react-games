@@ -1,6 +1,7 @@
-import { duplicateCards, } from "./index";
+import { duplicateCards, firstCardClick } from "./index";
 import { Card } from "../model";
 
+const date = Date.now();
 const cards: Card[] = [
   {
     id: "1",
@@ -23,8 +24,6 @@ const cards: Card[] = [
 ];
 
 describe("Memory helper | ", () => {
-  beforeAll(() => {});
-
   describe("duplicateCards | ", () => {
     it("Should duplicate all cards and mark them duplicated", () => {
       const duplicatedCards = duplicateCards(cards);
@@ -46,9 +45,27 @@ describe("Memory helper | ", () => {
     });
 
     it("Should return an empty array if passed undefined", () => {
-      const duplicatedCards = duplicateCards(undefined);
+      const duplicatedCards = duplicateCards([]);
 
       expect(duplicatedCards).toEqual([]);
+    });
+  });
+
+  describe("firstClick | ", () => {
+    it("Should save the time and mark the game as started", () => {
+      // Arrange
+      jest.spyOn(Date, "now").mockReturnValue(date);
+
+      const expectedState = {
+        started: true,
+        startingTime: date
+      };
+
+      // Act
+      const newState = firstCardClick();
+
+      // Assert
+      expect(newState).toEqual(expectedState);
     });
   });
 });
