@@ -20,12 +20,19 @@ export interface GameState {
   startingTime: number;
   started: boolean;
   gameDifficulty: GameDifficulty;
+  cardOnHold?: string;
 }
 
-export type Handlers = {
+export type StateHandlers = {
   initGame: () => StateHandler<GameState>;
   startNewGame: (cards: Card[]) => StateHandler<GameState>;
-  onCardClick: (card: string) => StateHandler<GameState>;
+  firstCardClick: () => StateHandler<GameState>;
+  toggleHoldCard: (cardId: string) => StateHandler<GameState>;
+  toggleFlips: (cards: Card[]) => StateHandler<GameState>;
 };
 
-export type GameProps = GameState & Handlers;
+export type Handlers = {
+  onCardClick: (card: Card) => StateHandler<GameState>;
+};
+
+export type GameProps = GameState & StateHandlers & Handlers;

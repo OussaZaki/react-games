@@ -53,6 +53,11 @@ export const unsetFlippedCards = (cards: Card[], cardsIds: string[]) =>
     if (includes(cardsIds, card.id)) { card.flipped = false; }
   });
 
+export const toggleFlippedCards = (cards: Card[], cardsIds: string[]) =>
+  each(cards, card => {
+    if (includes(cardsIds, card.id)) { card.flipped = !card.flipped; }
+  });
+
 export const allFoundCards = (cards: Card[]) => {
   each(cards, card => {
     if (!card.found) { return false; }
