@@ -91,6 +91,11 @@ export const toggleFlips = (state: GameState) => (...cardIds: string[]) => {
   };
 };
 
+export const cardsComparison = (state: GameState) => (cardId1: string, cardId2: string) => {
+  return {};
+};
+
+
 export const onCardClick = (props: GameProps) => (card: Card) => {
   if (card.found) {
     return undefined;
@@ -108,7 +113,10 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   }
 
   props.toggleFlips(card.id);
-  // TODO: implement the comparison logic here
+  setTimeout(() => {
+    props.cardsComparison(props.cardOnHold!, card.id);
+  }, 350);
+
   // throw Error("Not Implemented");
 };
 
@@ -122,7 +130,8 @@ export const withGameStateHandlers = withStateHandlers(initialState, {
   startTimer,
   toggleFlips,
   setFounds,
-  toggleHoldCard
+  toggleHoldCard,
+  cardsComparison
 });
 
 // QUESTION: why is GameState merged into GameProps?

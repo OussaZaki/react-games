@@ -30,6 +30,7 @@ export type StateHandlers = {
   toggleHoldCard: (cardId?: string) => StateHandler<GameState>;
   toggleFlips: (...cardIds: string[]) => StateHandler<GameState>;
   setFounds: (...cardIds: string[]) => StateHandler<GameState>;
+  cardsComparison: (cardId1: string, cardId2: string) => StateHandler<GameState>;
 };
 
 export type Handlers = {
