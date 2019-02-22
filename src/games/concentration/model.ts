@@ -26,9 +26,10 @@ export interface GameState {
 export type StateHandlers = {
   initGame: () => StateHandler<GameState>;
   startNewGame: (cards: Card[]) => StateHandler<GameState>;
-  firstCardClick: () => StateHandler<GameState>;
-  toggleHoldCard: (cardId: string) => StateHandler<GameState>;
-  toggleFlips: (cards: Card[]) => StateHandler<GameState>;
+  startTimer: () => StateHandler<GameState>;
+  toggleHoldCard: (cardId?: string) => StateHandler<GameState>;
+  toggleFlips: (...cardIds: string[]) => StateHandler<GameState>;
+  setFounds: (...cardIds: string[]) => StateHandler<GameState>;
 };
 
 export type Handlers = {

@@ -1,4 +1,4 @@
-import { duplicateCards, firstCardClick } from "./index";
+import { duplicateCards, startTimer } from "./index";
 import { Card } from "../model";
 
 const date = Date.now();
@@ -62,7 +62,7 @@ describe("Memory helper | ", () => {
       };
 
       // Act
-      const newState = firstCardClick();
+      const newState = startTimer();
 
       // Assert
       expect(newState).toEqual(expectedState);

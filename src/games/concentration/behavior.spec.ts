@@ -147,7 +147,7 @@ describe("Concentration game behavior | ", () => {
   describe("onCardClick | ", () => {
     it("Should call first click if the game hasn't started yet", () => {
       // Arrange
-      const firstCardClickMock = jest.spyOn(helpers, "firstCardClick");
+      const startTimerMock = jest.spyOn(helpers, "startTimer");
       const card: Card = {
         id: "0",
         svg: "apple",
@@ -167,7 +167,7 @@ describe("Concentration game behavior | ", () => {
       const newState = onCardClick(state)(card);
 
       // Assert
-      expect(firstCardClickMock).toBeCalled();
+      expect(startTimerMock).toBeCalled();
     });
 
     it("Should not update state if the card is flipped", () => {
