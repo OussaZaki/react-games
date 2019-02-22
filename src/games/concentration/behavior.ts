@@ -1,4 +1,10 @@
-import { getCards, setFlippedCards, unsetFlippedCards, toggleFlippedCards } from "./helper";
+import {
+  getCards,
+  setFlippedCards,
+  unsetFlippedCards,
+  toggleFlippedCards,
+  setFoundCards
+} from "./helper";
 import { map, includes, filter } from "lodash";
 import { Card, GameState, GameProps } from "./model";
 import { withStateHandlers, lifecycle, withHandlers } from "recompose";
@@ -24,18 +30,18 @@ export const startNewGame = () => (cards: Card[]) => ({
   loading: false
 });
 
-export const firstCardClick = () => () => ({
+export const startTimer = () => () => ({
   started: true,
   startingTime: Date.now()
 });
 
-export const toggleHoldCard = (state: GameState) => (cardId: string) => {
-  return state.cardOnHold
+export const toggleHoldCard = () => (cardId?: string) => {
+  return cardId
     ? {
-        cardOnHold: undefined
+        cardOnHold: cardId
       }
     : {
-        cardOnHold: cardId
+        cardOnHold: undefined
       };
 };
 
@@ -63,15 +69,25 @@ export const unflipCards = (state: GameState) => (cards: Card[]) => {
   };
 };
 
-export const toggleFlips = (state: GameState) => (cards: Card[]) => {
-  const ids = map(cards, "id");
-  const cardsInDeck = filter(state.cards, _card => includes(ids, _card.id));
+export const setFounds = (state: GameState) => (...cardIds: string[]) => {
+  const cardsInDeck = filter(state.cards, _card => includes(cardIds, _card.id));
   if (!cardsInDeck.length) {
     throw Error("No card was found");
   }
 
   return {
-    cards: toggleFlippedCards(state.cards, ids)
+    cards: setFoundCards(state.cards, cardIds)
+  };
+};
+
+export const toggleFlips = (state: GameState) => (...cardIds: string[]) => {
+  const cardsInDeck = filter(state.cards, _card => includes(cardIds, _card.id));
+  if (!cardsInDeck.length) {
+    throw Error("No card was found");
+  }
+
+  return {
+    cards: toggleFlippedCards(state.cards, cardIds)
   };
 };
 
@@ -81,14 +97,18 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   }
 
   if (!props.started) {
-    props.firstCardClick();
+    props.startTimer();
   }
 
+  // Handle the first flipped card.
   if (!props.cardOnHold || props.cardOnHold === card.id) {
     props.toggleHoldCard(card.id);
-    props.toggleFlips([card]);
+    props.toggleFlips(card.id);
+    return;
   }
 
+  props.toggleFlips(card.id);
+  // TODO: implement the comparison logic here
   // throw Error("Not Implemented");
 };
 
@@ -99,8 +119,9 @@ export const withGameHandlers = withHandlers({
 export const withGameStateHandlers = withStateHandlers(initialState, {
   initGame,
   startNewGame,
-  firstCardClick,
+  startTimer,
   toggleFlips,
+  setFounds,
   toggleHoldCard
 });
 
