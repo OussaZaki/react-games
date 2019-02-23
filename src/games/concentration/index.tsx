@@ -3,7 +3,12 @@ import { compose } from "recompose";
 
 import { GameProps } from "./model";
 import { FlipCard } from "./components";
-import { withGameStateHandlers, withCardsHandler, withGameHandler, withLifecycle } from "./behavior";
+import {
+  withGameStateHandlers,
+  withCardsHandler,
+  withGameFlowHandler,
+  withLifecycle
+} from "./logic";
 
 const Concentration: React.FC<GameProps> = ({
   loading,
@@ -34,6 +39,6 @@ const Concentration: React.FC<GameProps> = ({
 export default compose<GameProps, {}>(
   withGameStateHandlers,
   withCardsHandler,
-  withGameHandler,
+  withGameFlowHandler,
   withLifecycle
 )(Concentration);
