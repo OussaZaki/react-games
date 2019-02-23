@@ -3,7 +3,8 @@ import {
   setFlippedCards,
   unsetFlippedCards,
   toggleFlippedCards,
-  setFoundCards
+  setFoundCards,
+  matchingCards
 } from "./helper";
 import { map, includes, filter } from "lodash";
 import { Card, GameState, GameProps } from "./model";
@@ -91,14 +92,20 @@ export const toggleFlips = (state: GameState) => (...cardIds: string[]) => {
   };
 };
 
-export const cardsComparison = (state: GameState) => (cardId1: string, cardId2: string) => {
-  return {};
+export const cardsComparison = (props: GameProps) => (cardOnHold: string, currentCard: string) => {
+  if (matchingCards(cardOnHold, currentCard)) {
+    props.setFounds(cardOnHold, currentCard);
+  } else {
+    props.toggleFlips(cardOnHold, currentCard);
+  }
+
+  props.toggleHoldCard();
 };
 
 
 export const onCardClick = (props: GameProps) => (card: Card) => {
-  if (card.found) {
-    return undefined;
+  if (card.found || card.flipped) {
+    return;
   }
 
   if (!props.started) {
@@ -106,7 +113,7 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   }
 
   // Handle the first flipped card.
-  if (!props.cardOnHold || props.cardOnHold === card.id) {
+  if (!props.cardOnHold) {
     props.toggleHoldCard(card.id);
     props.toggleFlips(card.id);
     return;
@@ -120,8 +127,12 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   // throw Error("Not Implemented");
 };
 
-export const withGameHandlers = withHandlers({
+export const withGameHandler = withHandlers({
   onCardClick
+});
+
+export const withCardsHandler = withHandlers({
+  cardsComparison,
 });
 
 export const withGameStateHandlers = withStateHandlers(initialState, {
@@ -130,8 +141,7 @@ export const withGameStateHandlers = withStateHandlers(initialState, {
   startTimer,
   toggleFlips,
   setFounds,
-  toggleHoldCard,
-  cardsComparison
+  toggleHoldCard
 });
 
 // QUESTION: why is GameState merged into GameProps?

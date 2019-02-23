@@ -30,11 +30,11 @@ export type StateHandlers = {
   toggleHoldCard: (cardId?: string) => StateHandler<GameState>;
   toggleFlips: (...cardIds: string[]) => StateHandler<GameState>;
   setFounds: (...cardIds: string[]) => StateHandler<GameState>;
-  cardsComparison: (cardId1: string, cardId2: string) => StateHandler<GameState>;
 };
 
 export type Handlers = {
-  onCardClick: (card: Card) => StateHandler<GameState>;
+  cardsComparison: (cardOnHold: string, currentCard: string) => void;
+  onCardClick: (card: Card) => void;
 };
 
 export type GameProps = GameState & StateHandlers & Handlers;
