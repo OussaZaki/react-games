@@ -2,9 +2,9 @@ import { withHandlers } from "recompose";
 
 import { GameProps, Card } from "../model";
 
-export const onCardClick = (props: GameProps) => (card: Card) => {
+export const onCardClick = (props: Partial<GameProps>) => (card: Card) => {
   if (card.found || card.flipped) {
-    return;
+    return undefined;
   }
 
   if (!props.started) {
