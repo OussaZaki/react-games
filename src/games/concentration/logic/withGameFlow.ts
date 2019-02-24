@@ -21,11 +21,11 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   props.toggleFlips(card.id);
   setTimeout(() => {
     props.cardsComparison(props.cardOnHold!, card.id);
-  }, 350);
+  }, 1000);
 };
 
-export const withGamFloweHandler = withHandlers({
+export const withGameFlow = withHandlers({
   onCardClick
 });
 
-export default withGamFloweHandler;
+export default withGameFlow;

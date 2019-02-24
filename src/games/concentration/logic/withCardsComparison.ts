@@ -16,8 +16,8 @@ export const cardsComparison = (props: GameProps) => (
   props.toggleHoldCard();
 };
 
-export const withCardsHandler = withHandlers({
+export const withCardsComparison = withHandlers({
   cardsComparison
 });
 
-export default withCardsHandler;
+export default withCardsComparison;
