@@ -3,7 +3,7 @@ import { onCardClick } from "./withGameFlow";
 jest.useFakeTimers(); // using setTimeout within onCardClick.
 const props = {
   started: false,
-  cardOnHold: undefined,
+  cardOnHold: "",
   startTimer: jest.fn(),
   toggleHoldCard: jest.fn(),
   toggleFlips: jest.fn(),
