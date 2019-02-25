@@ -1,14 +1,12 @@
-// @ts-nocheck
 import {
   loadGamefromCache,
   initGame,
   startNewGame,
-  toggleFlips
+  startTimer
 } from "./withGameStateHandlers";
-import * as helpers from "../helper";
 import { Card } from "../model";
 
-const cards = [
+const cards: Card[] = [
   {
     id: "1",
     svg: "apple",
@@ -23,6 +21,7 @@ const cards = [
   }
 ];
 const date = Date.now();
+jest.spyOn(Date, "now").mockImplementation(() => date);
 
 describe("Concentration game behavior | ", () => {
   describe("loadGamefromCache | ", () => {
@@ -69,41 +68,18 @@ describe("Concentration game behavior | ", () => {
     });
   });
 
-  describe("toggleCards | ", () => {
+  describe("startTimer | ", () => {
     it("Should mark one card as flipped", () => {
       const state = {
-        loading: false,
-        cards,
-        startingTime: date,
         started: true,
-        gameDifficulty: 1
+        startingTime: date
       };
 
       // Act
-      const newState = toggleFlips(state)(cards[0].id);
+      const newState = startTimer()();
 
       // Assert
-      expect(newState.cards[0].flipped).toBe(true);
-    });
-
-    it("Should throw error if the card is not found", () => {
-      const state = {
-        otherState: "a",
-        cards
-      };
-
-      const card = {
-        id: "9",
-        svg: "hello",
-        flipped: false,
-        found: false
-      };
-
-      // Act
-      const newStateFn = () => toggleFlips(state)(card.id);
-
-      // Assert
-      expect(newStateFn).toThrow("No card was found");
+      expect(newState).toEqual(state);
     });
   });
 });
