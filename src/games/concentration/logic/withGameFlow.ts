@@ -1,6 +1,7 @@
 import { withHandlers } from "recompose";
 
 import { GameProps, Card } from "../model";
+import { allFoundCards } from "../helper";
 
 export const onCardClick = (props: GameProps) => (card: Card) => {
   if (!props.started) {
@@ -22,6 +23,13 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   // Handle second card flip and Delay comparison for a good UX
   setTimeout(() => {
     props.cardsComparison(cardOnHold, card.id);
+  }, 1000);
+
+  // Check if game is won.
+  setTimeout(() => {
+    if (allFoundCards(props.cards)) {
+      props.winGame();
+    }
   }, 1000);
 };
 

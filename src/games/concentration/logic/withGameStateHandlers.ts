@@ -1,18 +1,39 @@
-import { withStateHandlers } from "recompose";
+import { withStateHandlers, StateHandler } from "recompose";
 import { includes, filter } from "lodash";
 
 import {
   toggleFlippedCards,
   setFoundCards
 } from "../helper";
-import { Card, GameState, GameProps } from "../model";
+import { Card, GameDifficulty } from "../model";
+
+export interface GameState {
+  loading: boolean;
+  cards: Card[];
+  startingTime: number;
+  started: boolean;
+  gameDifficulty: GameDifficulty;
+  cardOnHold?: string;
+  gameWon: boolean;
+}
+
+export type StateHandlers = {
+  initGame: () => StateHandler<GameState>;
+  startNewGame: (cards: Card[]) => StateHandler<GameState>;
+  startTimer: () => StateHandler<GameState>;
+  toggleHoldCard: (cardId?: string) => StateHandler<GameState>;
+  toggleFlips: (...cardIds: string[]) => StateHandler<GameState>;
+  setFounds: (...cardIds: string[]) => StateHandler<GameState>;
+  winGame: () => StateHandler<GameState>;
+};
 
 const initialState: GameState = {
   loading: false,
   cards: [],
   startingTime: 0,
   started: false,
-  gameDifficulty: 0
+  gameDifficulty: 0,
+  gameWon: false
 };
 
 export const loadGamefromCache = () => () => {
@@ -31,6 +52,11 @@ export const startNewGame = () => (cards: Card[]) => ({
 export const startTimer = () => () => ({
   started: true,
   startingTime: Date.now()
+});
+
+
+export const winGame = () => () => ({
+  gameWon: true
 });
 
 export const toggleHoldCard = () => (cardId?: string) => {
@@ -71,7 +97,8 @@ export const withGameStateHandlers = withStateHandlers(initialState, {
   startTimer,
   toggleFlips,
   setFounds,
-  toggleHoldCard
+  toggleHoldCard,
+  winGame
 });
 
 export default withGameStateHandlers;

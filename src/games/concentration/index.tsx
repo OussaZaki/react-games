@@ -12,6 +12,7 @@ import {
 
 const Concentration: React.FC<GameProps> = ({
   loading,
+  gameWon,
   cards,
   onCardClick
 }) => (
@@ -20,6 +21,7 @@ const Concentration: React.FC<GameProps> = ({
       <h2>Concentration</h2>
       <h4>Memory game with matching cards.</h4>
     </div>
+    {gameWon && <div>Congrats!</div>}
     {loading ? (
       <div>Loading...</div>
     ) : (
