@@ -13,14 +13,15 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   props.toggleFlips(card.id);
 
   // Handle the first flipped card.
-  if (!props.cardOnHold) {
+  const { cardOnHold } = props;
+  if (!cardOnHold) {
     props.toggleHoldCard(card.id);
     return;
   }
 
   // Handle second card flip and Delay comparison for a good UX
   setTimeout(() => {
-    props.cardsComparison(props.cardOnHold!, card.id);
+    props.cardsComparison(cardOnHold, card.id);
   }, 1000);
 };
 
