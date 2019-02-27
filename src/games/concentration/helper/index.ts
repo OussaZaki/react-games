@@ -67,11 +67,11 @@ export const toggleFlippedCards = (cards: Card[], cardsIds: string[]) =>
   });
 
 export const allFoundCards = (cards: Card[]) => {
-  each(cards, card => {
+  for (const card of cards) {
     if (!card.found) {
       return false;
     }
-  });
+  }
 
   return true;
 };
