@@ -1,16 +1,12 @@
 import * as React from "react";
+import { Header } from "./components";
 
-class Puzzle2048 extends React.Component {
-  render() {
-    return (
-      <div className="2048">
-        <div className="game-title">
-          <h2>2048</h2>
-          <h4>Number arrangement game.</h4>
-        </div>
-      </div>
-    );
-  }
-}
+const Puzzle2048: React.FC = () => (
+  <div className="2048">
+    <Header score={32} bestScore={1024} />
+    <div>Grid goes here</div>
+    <div>Footer</div>
+  </div>
+);
 
 export default Puzzle2048;
