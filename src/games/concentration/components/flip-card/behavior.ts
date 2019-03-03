@@ -8,13 +8,13 @@ export type Props = {
 };
 
 export type WithProps = {
-  classNames: string;
+  className: string;
 };
 
 export type FlipCardProps = Props & WithProps;
 
 export const newProps = (props: Props) => ({
-  classNames: `flipcard ${props.found ? "flipped found" : props.flipped ? "flipped" : ""}`
+  className: `flipcard ${props.found ? "flipped found" : props.flipped ? "flipped" : ""}`
 });
 
 export const withStyleProps = withProps(newProps);

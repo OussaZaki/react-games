@@ -8,9 +8,9 @@ import "./styles.css";
 const FlipCard: React.FC<FlipCardProps> = ({
   onClick,
   content,
-  classNames
+  className
 }) => (
-  <div className={classNames} onClick={onClick}>
+  <div className={className} onClick={onClick}>
     <div className="front">
       <div className="child">{content}</div>
     </div>
