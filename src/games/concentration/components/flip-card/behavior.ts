@@ -1,4 +1,5 @@
 import { withProps } from "recompose";
+import classNames from "classnames";
 
 export type Props = {
   onClick: () => void;
@@ -14,7 +15,10 @@ export type WithProps = {
 export type FlipCardProps = Props & WithProps;
 
 export const newProps = (props: Props) => ({
-  className: `flipcard ${props.found ? "flipped found" : props.flipped ? "flipped" : ""}`
+  className: classNames("flipcard", {
+    "flipped": props.flipped || props.found,
+    "found": props.found
+  })
 });
 
 export const withStyleProps = withProps(newProps);
