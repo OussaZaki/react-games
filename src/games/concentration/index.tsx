@@ -1,7 +1,7 @@
 import * as React from "react";
 import { compose } from "recompose";
 
-import { GameProps } from "./model";
+import { GameProps, Card } from "./model";
 import { FlipCard } from "./components";
 import {
   withGameStateHandlers,
@@ -10,6 +10,17 @@ import {
   withLifecycle
 } from "./logic";
 
+const _getFlipCards = (cards: Card[], clickHandler: (card: Card) => void) =>
+  cards.map(card => (
+    <FlipCard
+      onClick={() => clickHandler(card)}
+      key={card.id}
+      content={card.svg}
+      flipped={card.flipped}
+      found={card.found}
+    />
+  ));
+
 const Concentration: React.FC<GameProps> = ({
   loading,
   gameWon,
@@ -17,24 +28,12 @@ const Concentration: React.FC<GameProps> = ({
   onCardClick
 }) => (
   <div className="Concentration">
-    <div className="game-title">
+    <div className="header">
       <h2>Concentration</h2>
       <h4>Memory game with matching cards.</h4>
+      {gameWon && <h3>Congrats!</h3>}
     </div>
-    {gameWon && <div>Congrats!</div>}
-    {loading ? (
-      <div>Loading...</div>
-    ) : (
-      cards.map(card => (
-        <FlipCard
-          onClick={() => onCardClick(card)}
-          key={card.id}
-          content={card.svg}
-          flipped={card.flipped}
-          found={card.found}
-        />
-      ))
-    )}
+    {loading ? <div>Loading...</div> : _getFlipCards(cards, onCardClick)}
   </div>
 );
 
