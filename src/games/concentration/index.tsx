@@ -2,7 +2,7 @@ import * as React from "react";
 import { compose } from "recompose";
 
 import { GameProps, Card } from "./model";
-import { FlipCard } from "./components";
+import { FlipCard, Loader } from "./components";
 import {
   withGameStateHandlers,
   withCardsComparison,
@@ -33,7 +33,11 @@ const Concentration: React.FC<GameProps> = ({
       <h4>Memory game with matching cards.</h4>
       {gameWon && <h3>Congrats!</h3>}
     </div>
-    {loading ? <div>Loading...</div> : _getFlipCards(cards, onCardClick)}
+    {loading ? (
+      <Loader message={"Loading Cards..."} />
+    ) : (
+      _getFlipCards(cards, onCardClick)
+    )}
   </div>
 );
 

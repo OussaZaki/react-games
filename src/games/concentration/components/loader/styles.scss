@@ -1,0 +1,44 @@
+$loader-size: 50px;
+$loader-color: black;
+$loader-width: 4px;
+
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+
+  .loader {
+    width: $loader-size;
+    height: $loader-size;
+    display: inline-block;
+    margin: 50px auto;
+    vertical-align: middle;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      bottom: -6px;
+      right: -6px;
+      border-radius: 50%;
+      border: $loader-width solid transparent;
+      border-top-color: $loader-color;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .message {
+    margin: 0 auto;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg)
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
