@@ -3,7 +3,7 @@ import * as React from "react";
 import { compose } from "recompose";
 import { FlipCardProps, Props, withStyleProps } from "./behavior";
 
-import "./styles.css";
+import "./styles.scss";
 
 const FlipCard: React.FC<FlipCardProps> = ({
   onClick,

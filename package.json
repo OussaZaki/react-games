@@ -20,6 +20,7 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
