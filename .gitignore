@@ -11,6 +11,9 @@
 # production
 /build
 
+# temproray files and local trash
+/tmp
+
 # misc
 .DS_Store
 .env.local
