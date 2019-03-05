@@ -1,12 +1,23 @@
 import * as React from "react";
-import { Header, Grid } from "./components";
+import { compose } from "recompose";
 
-const Puzzle2048: React.FC = () => (
-  <div className="2048">
-    <Header score={32} bestScore={1024} />
-    <Grid />
-    <div>Footer</div>
+import { Header, Grid, TileContainer } from "./components";
+import { GameProps } from "./model";
+import { withGameStateHandlers, withLifecycle } from "./logic";
+
+import "./styles.scss";
+
+const Puzzle2048: React.FC<GameProps> = ({ tiles, score }) => (
+  <div>
+    <Header score={score} bestScore={1024} />
+    <div className="game-container">
+      <Grid />
+      <TileContainer tiles={tiles} />
+    </div>
   </div>
 );
 
-export default Puzzle2048;
+export default compose<GameProps, {}>(
+  withGameStateHandlers,
+  withLifecycle
+)(Puzzle2048);
