@@ -5,12 +5,12 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 
 import store, { history } from "./store";
-import App from "./App";
+import RoutesConnector from "./routes";
 import * as serviceWorker from "./serviceWorker";
 
 const Root = () => (
   <Provider store={store}>
-    <App history={history}/>
+    <RoutesConnector history={history} />
   </Provider>
 );
 

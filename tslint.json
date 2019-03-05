@@ -17,7 +17,7 @@
       "newline-before-return": false,
       "no-any": false,
       "no-empty-interface": false,
-      "no-import-side-effect": [true, {"ignore-module": "(\\.html|\\.scss)$"}],
+      "no-import-side-effect": [true, {"ignore-module": "(tslib|\\.html|\\.scss)$"}],
       "no-inferrable-types": [true, "ignore-params", "ignore-properties"],
       "no-namespace": false,
       "no-null-keyword": false,
@@ -50,7 +50,7 @@
         "allow-pascal-case",
         "allow-leading-underscore"
       ],
-      "no-implicit-dependencies": [true],
+      "no-implicit-dependencies": [true, ["tslib"]],
       "whitespace": [true, "check-branch", "check-operator"],
       // tslint-react
       "jsx-no-multiline-js": false,
