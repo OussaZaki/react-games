@@ -1,0 +1,51 @@
+@import "../../base.scss";
+
+@mixin tile-positions {
+  @for $x from 1 through $grid-row-cells {
+    @for $y from 1 through $grid-row-cells {
+      .tile-position-#{$x}-#{$y} {
+        $xPos: floor(($tile-size + $grid-spacing) * ($x - 1));
+        $yPos: floor(($tile-size + $grid-spacing) * ($y - 1));
+        transform: translate($xPos, $yPos);
+      }
+    }
+  }
+}
+
+@mixin tile-colors {
+  $colors: gainsboro, lightgray, silver, darkgray, gray, dimgray, lightslategray,
+    slategray, darkslategray, #343434, black;
+
+  @for $i from 1 through length($colors) {
+    .tile-#{$i * 2} {
+      .tile-content {
+        background: nth($colors, $i);
+      }
+    }
+  }
+}
+
+@include tile-positions;
+@include tile-colors;
+
+.tile {
+  position: absolute;
+  width: ceil($tile-size);
+  height: ceil($tile-size);
+  line-height: ceil($tile-size);
+}
+
+.tile-content {
+  width: ceil($tile-size);
+  height: ceil($tile-size);
+  line-height: ceil($tile-size);
+  border-radius: $tile-border-radius;
+
+  color: white;
+  text-shadow: 2px 2px 0.5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-weight: bold;
+
+  z-index: 10;
+  font-size: 4em;
+}
