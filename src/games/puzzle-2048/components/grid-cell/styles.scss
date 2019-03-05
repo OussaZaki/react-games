@@ -1,0 +1,16 @@
+@import "../../base.scss";
+
+.grid-cell {
+  width: $tile-size;
+  height: $tile-size;
+  margin-right: $grid-spacing;
+  float: left;
+
+  border-radius: $tile-border-radius;
+
+  background: $cell-background;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
