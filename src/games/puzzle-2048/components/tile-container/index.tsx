@@ -10,7 +10,6 @@ export const _getTiles = (tiles: TileModel[]) =>
       key={tile.id}
       position={tile.position}
       value={tile.value}
-      isNew={tile.isNew}
     />
   ));
 

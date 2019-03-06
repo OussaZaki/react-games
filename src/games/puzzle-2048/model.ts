@@ -1,26 +1,32 @@
 import { StateHandlers, GameState } from "./logic/withGameStateHandlers";
 
+export type Grid = number[][];
+
 export type Position = {
   x: number;
   y: number;
 };
 
-export type Grid = Array<Array<number | string>>;
+export type Tile = {
+  id?: string;
+  value: number;
+  position: Position;
+};
 
 export enum Direction {
-  Up = 0,
+  Up = 1,
   Right,
   Down,
   Left
 }
 
-export type Tile = {
-  id: string;
-  position: Position;
-  value: number;
-  previousPosition?: Position;
-  mergedFrom?: Tile;
-  isNew: boolean;
+export type Handlers = {
+  onMove: (direction: Direction) => void;
+  afterMove: (grid: Grid) => void;
 };
 
-export type GameProps = GameState & StateHandlers;
+export type WithProps = {
+  tiles: Tile[];
+};
+
+export type GameProps = GameState & StateHandlers & WithProps & Handlers;

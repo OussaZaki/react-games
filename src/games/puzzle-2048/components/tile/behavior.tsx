@@ -6,7 +6,6 @@ import { Position } from "../../model";
 export type Props = {
   position: Position;
   value: number;
-  isNew: boolean;
 };
 
 export type WithProps = {
@@ -24,10 +23,7 @@ export const newProps = (props: Props) => ({
   className: classNames(
     "tile",
     _positionClassName(props.position),
-    _valueClassName(props.value),
-    {
-      "tile-new": props.isNew
-    }
+    _valueClassName(props.value)
   )
 });
 
