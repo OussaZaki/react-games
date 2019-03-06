@@ -1,45 +1,56 @@
-import { withStateHandlers, StateHandler } from "recompose";
+import { withStateHandlers } from "recompose";
 import { fill } from "lodash";
 
-import { getRandomTiles, insertTiles } from "../helpers";
-import { Tile, Grid } from "../model";
+import { getRandomTiles } from "../helpers";
+import { Grid } from "../model";
 
 export type GameState = {
   score: number;
-  tiles: Tile[];
   gameOver: boolean;
   gameWon: boolean;
   grid: Grid;
 };
 
 export type StateHandlers = {
-  initGame: () => StateHandler<GameState>;
+  initGame: () => Partial<GameState>;
+  setGrid: (grid: Grid) => Partial<GameState>;
+  winGame: () => Partial<GameState>;
+  finishGame: () => Partial<GameState>;
 };
 
 const initialState: GameState = {
-  tiles: [],
   score: 0,
   gameOver: false,
   gameWon: false,
-  grid: fill(Array(4), fill(Array(4), -1))
+  grid: fill(Array(4), fill(Array(4), 0))
 };
-
 
 export const loadGamefromCache = () => () => {
   throw Error("Not Implemented");
 };
 
-export const initGame = (state: GameState) => () => {
-  const tiles = getRandomTiles(state.grid, 3);
-
-  return {
-    tiles,
-    grid: insertTiles(state.grid, ...tiles)
-  };
-};
-
-export const withGameStateHandlers = withStateHandlers(initialState, {
-  initGame
+export const initGame = (state: GameState) => () => ({
+  grid: getRandomTiles(state.grid, 3)
 });
+
+export const setGrid = () => (grid: Grid) => ({
+  grid
+});
+
+export const winGame = () => () => ({
+  gameWon: true
+});
+
+export const finishGame = () => () => ({
+  gameOver: true
+});
+
+export const withGameStateHandlers =
+  withStateHandlers<GameState, StateHandlers>(initialState, {
+    initGame,
+    setGrid,
+    winGame,
+    finishGame
+  });
 
 export default withGameStateHandlers;

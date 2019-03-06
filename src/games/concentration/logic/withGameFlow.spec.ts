@@ -4,10 +4,12 @@ jest.useFakeTimers(); // using setTimeout within onCardClick.
 const props = {
   started: false,
   cardOnHold: "",
+  cards: [],
   startTimer: jest.fn(),
   toggleHoldCard: jest.fn(),
   toggleFlips: jest.fn(),
-  cardsComparison: jest.fn()
+  cardsComparison: jest.fn(),
+  winGame: jest.fn()
 };
 
 
@@ -116,6 +118,7 @@ describe("withGameFlow | ", () => {
     it("should compare cards if there is a card onHold", () => {
       // Arrange
       props.toggleHoldCard.mockClear();
+
       props.cardOnHold = "1_1";
       const card = {
         id: "1",

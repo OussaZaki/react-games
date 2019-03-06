@@ -3,7 +3,7 @@ import { compose } from "recompose";
 
 import { Header, Grid, TileContainer } from "./components";
 import { GameProps } from "./model";
-import { withGameStateHandlers, withLifecycle } from "./logic";
+import { withGameStateHandlers, withTilesProps, withLifecycle, onMoveHandler, afterMoveHandler } from "./logic";
 
 import "./styles.scss";
 
@@ -19,5 +19,8 @@ const Puzzle2048: React.FC<GameProps> = ({ tiles, score }) => (
 
 export default compose<GameProps, {}>(
   withGameStateHandlers,
+  withTilesProps,
+  onMoveHandler,
+  afterMoveHandler,
   withLifecycle
 )(Puzzle2048);

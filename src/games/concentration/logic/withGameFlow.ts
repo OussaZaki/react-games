@@ -26,6 +26,7 @@ export const onCardClick = (props: GameProps) => (card: Card) => {
   }, 1000);
 
   // Check if game is won.
+  // TODO: test this new flow.
   setTimeout(() => {
     if (allFoundCards(props.cards)) {
       props.winGame();
