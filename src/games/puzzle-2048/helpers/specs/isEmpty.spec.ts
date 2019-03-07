@@ -1,10 +1,7 @@
-import { fill } from "lodash";
+import { isEmpty, initializeGrid } from "../index";
 
-
-import { isEmpty } from "../index";
-import { Grid } from "../../model";
-
-const grid: Grid = fill(Array(4), fill(Array(4), 0));
+const gridSize = 4;
+const grid = initializeGrid(gridSize);
 
 describe("helpers | ", () => {
   describe("isEmpty | ", () => {
