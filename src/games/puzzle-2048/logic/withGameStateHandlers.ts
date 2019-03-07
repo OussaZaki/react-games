@@ -1,8 +1,8 @@
 import { withStateHandlers } from "recompose";
-import { fill } from "lodash";
 
-import { getRandomTiles } from "../helpers";
+import { getRandomTiles, initializeGrid } from "../helpers";
 import { Grid } from "../model";
+import { GRID_SIZE } from "../config";
 
 export type GameState = {
   score: number;
@@ -22,7 +22,7 @@ const initialState: GameState = {
   score: 0,
   gameOver: false,
   gameWon: false,
-  grid: fill(Array(4), fill(Array(4), 0))
+  grid: initializeGrid(GRID_SIZE)
 };
 
 export const loadGamefromCache = () => () => {
