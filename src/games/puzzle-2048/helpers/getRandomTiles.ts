@@ -14,7 +14,7 @@ export const availableCells = (grid: Grid) => {
   return emptyPositions;
 };
 
-export const getRandomValue = () => (Math.random() < 0.8 ? 2048 : 4);
+export const getRandomValue = () => (Math.random() < 0.8 ? 2 : 4);
 
 export const getRandomAvailableCell = (availableCells: Position[]) => {
   return availableCells[Math.floor(Math.random() * availableCells.length)];
