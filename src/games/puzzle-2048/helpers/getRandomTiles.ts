@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import { Grid, Position, Tile } from "../model";
 
 export const availableCells = (grid: Grid) => {
@@ -13,7 +14,7 @@ export const availableCells = (grid: Grid) => {
   return emptyPositions;
 };
 
-export const getRandomValue = () => (Math.random() < 0.8 ? 2 : 4);
+export const getRandomValue = () => (Math.random() < 0.8 ? 2048 : 4);
 
 export const getRandomAvailableCell = (availableCells: Position[]) => {
   return availableCells[Math.floor(Math.random() * availableCells.length)];
@@ -25,7 +26,7 @@ export const createTile = (cells: Position[]): Tile => ({
 });
 
 const getRandomTiles = (grid: Grid, tilesCount = 1) => {
-  const _grid = grid;
+  const _grid = cloneDeep(grid);
   const cells = availableCells(_grid);
 
   for (let i = 0; i < tilesCount && cells.length; i++) {

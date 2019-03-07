@@ -8,15 +8,15 @@ import { getRandomTiles, isMovesAvailable, isTargetMet } from "../helpers";
 import { WIN_TARGET } from "../config";
 
 export const afterMove = (props: GameProps) => () => {
-  let _grid = cloneDeep(props.grid);
-  if (isTargetMet(_grid, WIN_TARGET)) {
+  let grid = cloneDeep(props.grid);
+  if (isTargetMet(grid, WIN_TARGET)) {
     props.winGame();
   }
 
-  _grid = getRandomTiles(_grid);
-  props.setGrid(_grid);
+  grid = getRandomTiles(grid);
+  props.setGrid(grid);
 
-  if (!isMovesAvailable(_grid)) {
+  if (!isMovesAvailable(grid)) {
     props.finishGame(); // Game over!
   }
 };

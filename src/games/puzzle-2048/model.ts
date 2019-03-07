@@ -22,7 +22,7 @@ export enum Direction {
 
 export type Handlers = {
   onMove: (direction: Direction) => void;
-  afterMove: (grid: Grid) => void;
+  afterMove: () => void;
 };
 
 export type WithProps = {
