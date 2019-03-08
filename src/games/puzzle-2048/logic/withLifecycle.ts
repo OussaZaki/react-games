@@ -12,6 +12,7 @@ export const withLifecycle = lifecycle<GameProps, {}>({
     );
   },
 
+  // TODO: reference check memory leak.
   componentWillUnmount() {
     document.removeEventListener("keydown", (event: KeyboardEvent) =>
       keyboardInputHandler(event, this.props.onMove)
